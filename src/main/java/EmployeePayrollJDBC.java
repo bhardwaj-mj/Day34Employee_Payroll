@@ -1,6 +1,4 @@
-import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.DriverManager;
+import java.sql.*;
 import java.util.Enumeration;
 
 public class EmployeePayrollJDBC {
@@ -21,6 +19,21 @@ public class EmployeePayrollJDBC {
             System.out.println("Connecting to database" + jdbcURL);
             con = DriverManager.getConnection(jdbcURL, userName, password);
             System.out.println("Connection is successful!!!!!" + con);
+            Statement statement = con.createStatement();
+            boolean result = statement.execute(query);
+            if (result) {
+                ResultSet rs = statement.getResultSet();
+                while (rs.next()) {
+                    int id = rs.getInt("Id");
+                    System.out.println(id);
+                    String name = rs.getString("Name");
+                    System.out.println(name);
+                    int salary = rs.getInt("Salary");
+                    System.out.println(salary);
+                    Date startDate = rs.getDate("StartDate");
+                    System.out.println(startDate);
+                }
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
